@@ -8,7 +8,7 @@ const port = new SerialPort("COM4", { baudRate: 9600 });
 const parser = new Readline();
 port.pipe(parser);
 
-const pushToken = "ExponentPushToken[IIPzU_PMFKzBbWmwBILPhs]";
+const pushToken = "ExponentPushToken[qM8iaqBEAK5QA0Mehrtl1G]";
 
 parser.on('data', line => {
     // Check that all your push tokens appear to be valid Expo push tokens
@@ -20,8 +20,8 @@ parser.on('data', line => {
     expo.sendPushNotificationsAsync([{
         to: pushToken,
         sound: 'default',
-        body: 'Meow!',
-        data: { },
+        body: line,
+        data: { line: line.trim(), date: +new Date() },
     }]);
     console.log(`> ${line}`);
 });

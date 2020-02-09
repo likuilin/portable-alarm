@@ -5,7 +5,8 @@ import { Alert } from 'react-native';
 export default class Backpack extends React.Component {
     state = { visible: true }
     
-    unsup () { Alert.alert("Unsupported"); }
+    send = e => { if (this.props.hookup) fetch(e) }
+    
     render() {
         if (!this.state.visible) return null;
         return (
@@ -14,7 +15,8 @@ export default class Backpack extends React.Component {
                 <Image source={require("../assets/icon.png")} style={styles.img} />
                 <Text style={styles.title}>{this.props.name}</Text>
                 <View style={styles.buttons}>
-                    <Button style={styles.button} title="Toggle Alarm" onPress={this.unsup} />
+                    <Button style={styles.button} title="Mute Alarm" onPress={()=>this.send("https://kuilin.net/portalert/write.php?data=nope")} />
+                    <Button style={styles.button} title="Activate Alarm" onPress={()=>this.send("https://kuilin.net/portalert/write.php?data=ALARM_ON")} />
                     <Button style={styles.button} color="red" title="Delete Thing" onPress={()=>this.setState({visible: false})} />
                 </View>
                 <Text style={styles.status}>{this.props.last ? "Last Notification: " + this.props.last : ""}</Text>
