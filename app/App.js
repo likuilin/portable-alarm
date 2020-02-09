@@ -18,15 +18,14 @@ export default class App extends React.Component {
     }
     
     componentDidMount() {
+        Notifications.addListener(this._handleNotification.bind(this));
         AppState.addEventListener('change', this._handleAppStateChange);
         this._load();
-        Notifications.addListener(this._handleNotification);
     }
     
     _handleNotification = notification => {
-        console.log("123");
-        console.log(notification);
-        this.setState({ notification: notification });
+        console.log(notification.data);
+        this.setState({ notification: notification.data.line + " at " + (new Date(+notification.data.date)).toLocaleString() });
     };
     
     componentWillUnmount() {
@@ -67,11 +66,11 @@ export default class App extends React.Component {
                         <Button color="red" title="Log Out" onPress={()=>this.setState({childKey: Math.random()})} />
                     </View>
                 </View>
-                <Backpack key={this.state.childKey + 1} name="My Backpack" last="test (123)" />
+                <Backpack key={this.state.childKey + 1} name="My Backpack" last={this.state.notification} hookup />
                 <Backpack key={this.state.childKey + 2} name="Second Backpack" />
-                <Backpack key={this.state.childKey + 3} name="Third Backpack" last={"Battery Low at " + new Date().toLocaleString()} />
+                <Backpack key={this.state.childKey + 3} name="Third Backpack" last={"Battery Low at " + new Date(1581187325000).toLocaleString()} />
                 <Backpack key={this.state.childKey + 4} name="Why Do I Have Four Backpacks" />
-                <Backpack key={this.state.childKey + 5} name="Baaacccckkkkppppaaaaccckkkksssss" last={"Movement Detected at " + new Date().toLocaleString()} />
+                <Backpack key={this.state.childKey + 5} name="Baaacccckkkkppppaaaaccckkkksssss" last={"Movement Detected at " + new Date(1581197325000).toLocaleString()} />
                 <Backpack key={this.state.childKey + 6} name="❤️" />
             </View>
         );
