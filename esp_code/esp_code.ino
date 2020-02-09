@@ -43,12 +43,14 @@ int lastSent = 0;
 
 void loop() {
   if (digitalRead(14) == HIGH) {
+    Serial.println("Motion: HIGH");
     if (lastSent)
       makeRequest("https://kuilin.net/portalert/write.php?data=ALARM_ON");
     else 
       makeRequest("https://kuilin.net/portalert/write.php?data=ALARM_ON&send");
     lastSent = 1;
   } else {
+    Serial.println("Motion: LOW");
     lastSent = 0;
     makeRequest("https://kuilin.net/portalert/alert.txt");
   }
@@ -69,7 +71,7 @@ void makeRequest(String url) {
 
     if (https.begin(*client, url)) {  // HTTPS
 
-      Serial.print("[HTTPS] GET...\n");
+      //Serial.print("[HTTPS] GET...\n");
       // start connection and send HTTP header
       int httpCode = https.GET();
 

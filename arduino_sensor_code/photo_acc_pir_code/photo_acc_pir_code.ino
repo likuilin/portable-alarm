@@ -99,9 +99,14 @@ void loop() {
   curr_z=accel.getCalculatedZ();
 
   moved = 0;
+  if (moved) Serial.println("asdf1");
   moved = moved || (analogRead(photoPin) > 100);  // Backpack opened
+  if (moved) Serial.println("asdf2");
   moved = moved || (digitalRead(motionPin) == HIGH);  // Motion detected
+  if (moved) Serial.println("asdf3");
   moved = moved || (accelerometerMoved());       // Accelerometer
+  if (moved) Serial.println("asdf4");
+  Serial.println();
 
   prev_x=curr_x;
   prev_y=curr_y;
